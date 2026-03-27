@@ -56,9 +56,10 @@ app.use(methodOverride('_method'));
 
 // Database URL
 const dbUrl = process.env.MONGO_ATLAS_URL || 'mongodb://127.0.0.1:27017/airbnb';
-console.log('NODE_ENV:', process.env.NODE_ENV);
-console.log('DB URL starts with:', dbUrl.substring(0, 30) + '...');
-console.log('CLOUD_API_KEY set:', !!process.env.CLOUD_API_KEY);
+if (dbUrl.includes('<password>') || dbUrl.includes('<db_password>')) {
+    console.error('CRITICAL: Your database URL still contains <password> placeholder!');
+}
+console.log('Using database URL:', dbUrl.replace(/:([^:@]+)@/, ':****@').substring(0, 50) + '...');
 
 // Mongo Session Store
 const store = MongoStore.create({
