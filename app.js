@@ -56,6 +56,9 @@ app.use(methodOverride('_method'));
 
 // Database URL
 const dbUrl = process.env.MONGO_ATLAS_URL || 'mongodb://127.0.0.1:27017/airbnb';
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('DB URL starts with:', dbUrl.substring(0, 30) + '...');
+console.log('CLOUD_API_KEY set:', !!process.env.CLOUD_API_KEY);
 
 // Mongo Session Store
 const store = MongoStore.create({
@@ -130,14 +133,18 @@ app.all('*', (req, res, next) => {
 
 // Error Handler
 app.use((err, req, res, next) => {
-    // Check if headers have already been sent
     if (res.headersSent) {
         return next(err);
     }
-    
+    console.error('APP ERROR:', err);
     const { statusCode = 500 } = err;
     if (!err.message) err.message = 'Oh No, Something Went Wrong!';
-    res.status(statusCode).render('error', { err });
+    try {
+        res.status(statusCode).render('error', { err });
+    } catch (renderErr) {
+        console.error('ERROR TEMPLATE ALSO FAILED:', renderErr);
+        res.status(500).send('<h1>Internal Server Error</h1><pre>' + err.message + '</pre>');
+    }
 });
 
 // ====================
