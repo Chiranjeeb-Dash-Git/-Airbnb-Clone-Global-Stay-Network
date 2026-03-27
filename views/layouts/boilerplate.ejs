@@ -15,12 +15,12 @@
     <%- include('../includes/navbar', { currentPage: typeof currentPage !== 'undefined' ? currentPage : '' }) %>
 
     <!-- Example flash message display in a layout -->
-    <% if (success && success.length > 0) { %>
+    <% if (typeof success !== 'undefined' && success && success.length > 0) { %>
         <div class="alert alert-success">
             <%= success %>
         </div>
     <% } %>
-    <% if (error && error.length > 0) { %>
+    <% if (typeof error !== 'undefined' && error && error.length > 0) { %>
         <div class="alert alert-danger">
             <%= error %>
         </div>
