@@ -151,12 +151,17 @@ app.use((err, req, res, next) => {
 // ====================
 // 7. Database Connection
 // ====================
-mongoose.connect(dbUrl)
+mongoose.connect(dbUrl, {
+    serverSelectionTimeoutMS: 5000,
+})
     .then(() => {
-        console.log('Connected to MongoDB');
+        console.log('✅ Connected to MongoDB Atlas successfully');
     })
     .catch(err => {
-        console.error('MongoDB connection error:', err);
+        console.error('❌ MONGODB CONNECTION ERROR:', err.message);
+        if (err.name === 'MongoServerSelectionError') {
+            console.error('Check if your IP (Render) is whitelisted on Atlas (0.0.0.0/0).');
+        }
     });
 
 // ====================
