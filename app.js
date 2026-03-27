@@ -55,7 +55,8 @@ app.use(express.json());
 app.use(methodOverride('_method'));
 
 // Database URL
-const dbUrl = process.env.MONGO_ATLAS_URL || 'mongodb://127.0.0.1:27017/airbnb';
+const dbUrlRaw = process.env.MONGO_ATLAS_URL || 'mongodb://127.0.0.1:27017/airbnb';
+const dbUrl = dbUrlRaw.trim();
 if (dbUrl.includes('<password>') || dbUrl.includes('<db_password>')) {
     console.error('CRITICAL: Your database URL still contains <password> placeholder!');
 }
