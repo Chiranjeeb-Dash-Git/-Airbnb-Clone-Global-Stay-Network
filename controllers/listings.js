@@ -21,9 +21,8 @@ module.exports.index = async (req, res) => {
 
         res.render('listings/index', { listings: listingsWithStats });
     } catch (error) {
-        console.error("Error in listings index controller:", error);
-        req.flash('error', 'Failed to load listings.');
-        res.redirect('/');
+        console.error('ERROR in listings index:', error);
+        res.status(500).render('error', { err: { message: 'Failed to load listings. ' + error.message } });
     }
 };
 // Show - Show one listing
