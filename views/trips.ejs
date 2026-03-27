@@ -1,0 +1,77 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container mt-5 pt-4 pb-5">
+    <h1 class="mb-4 fw-bold">Trips</h1>
+    
+    <% if (userBookings.length === 0) { %>
+        <div class="text-center py-5">
+            <i class="bi bi-airplane text-secondary" style="font-size: 4rem;"></i>
+            <p class="h4 text-secondary mt-3">No trips booked...yet!</p>
+            <p class="text-muted">Time to dust off your bags and start planning your next adventure</p>
+            <a href="/listings" class="btn btn-dark mt-3 px-4 py-2 rounded-3">Start searching</a>
+        </div>
+    <% } else { %>
+        <div class="space-y-4">
+            <% for(let booking of userBookings) { %>
+                <div class="card border border-light rounded-4 p-4 hover-shadow transition mb-4">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-md-3">
+                            <img src="<%= booking.listing.image.url %>" 
+                                 alt="<%= booking.listing.title %>" 
+                                 class="img-fluid rounded-3 w-100 h-100 object-fit-cover" 
+                                 style="aspect-ratio: 1/1;">
+                        </div>
+                        <div class="col-md-9">
+                            <h3 class="fw-bold mb-2"><%= booking.listing.title %></h3>
+                            <p class="text-muted mb-4"><%= booking.listing.location %></p>
+                            <div class="row text-sm mb-3">
+                                <div class="col-6 col-md-3">
+                                    <p class="mb-1"><span class="fw-medium text-muted small">Check-in:</span></p>
+                                    <p class="fw-semibold"><%= booking.checkIn.toLocaleDateString() %></p>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <p class="mb-1"><span class="fw-medium text-muted small">Check-out:</span></p>
+                                    <p class="fw-semibold"><%= booking.checkOut.toLocaleDateString() %></p>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <p class="mb-1"><span class="fw-medium text-muted small">Guests:</span></p>
+                                    <p class="fw-semibold"><%= booking.guests %></p>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <p class="mb-1"><span class="fw-medium text-muted small">Total:</span></p>
+                                    <p class="fw-bold fs-5">₹<%= booking.totalPrice %></p>
+                                </div>
+                            </div>
+                            <div class="mt-4 d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="badge rounded-pill px-3 py-2 text-capitalize <%= 
+                                        booking.status === 'confirmed' ? 'bg-success-subtle text-success' : 
+                                        booking.status === 'pending' ? 'bg-warning-subtle text-warning' : 
+                                        'bg-danger-subtle text-danger' %>">
+                                        <%= booking.status %>
+                                    </span>
+                                </div>
+                                <% if (booking.status !== 'cancelled') { %>
+                                    <form action="/bookings/<%= booking._id %>?_method=DELETE" method="POST" class="m-0" onsubmit="return confirm('Are you sure you want to cancel this booking? This action cannot be undone.');">
+                                        <button class="btn btn-outline-danger btn-sm rounded-pill px-4 fw-medium">
+                                            Cancel Booking
+                                        </button>
+                                    </form>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    <% } %>
+</div>
+
+<style>
+    .rounded-4 { border-radius: 1rem !important; }
+    .hover-shadow { transition: box-shadow 0.3s ease; }
+    .hover-shadow:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .bg-success-subtle { background-color: #d1e7dd; }
+    .bg-warning-subtle { background-color: #fff3cd; }
+    .bg-danger-subtle { background-color: #f8d7da; }
+</style>

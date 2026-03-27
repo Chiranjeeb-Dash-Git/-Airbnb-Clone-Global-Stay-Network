@@ -1,0 +1,279 @@
+<% layout('layouts/boilerplate', { hideNav: true, hideFooter: true }) %>
+<style>
+    body {
+        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+                    url('https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260') no-repeat center center fixed;
+        background-size: cover;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .listing-form-container {
+        background: rgba(14, 30, 37, 0.95);
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        width: 90%;
+        max-width: 600px;
+        margin: 1.5rem auto;
+    }
+
+    .form-title {
+        color: #fff;
+        font-size: 1.8rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 1rem;
+        text-align: center;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .form-section {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 0.8rem;
+        border-radius: 15px;
+        margin-bottom: 0.8rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .section-title {
+        color: #4ECDC4;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .form-control {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 8px 12px;
+        color: #fff;
+        margin-bottom: 0.4rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 0 10px rgba(78, 205, 196, 0.2);
+        border-color: #4ECDC4;
+        outline: none;
+    }
+
+    .form-label {
+        color: #fff;
+        font-weight: 500;
+        letter-spacing: 1px;
+        margin-bottom: 0.3rem;
+        display: block;
+    }
+
+    .btn-submit {
+        background: linear-gradient(45deg, #4ECDC4, #556270);
+        border: none;
+        padding: 10px 20px;
+        color: white;
+        border-radius: 50px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        width: 100%;
+        text-transform: uppercase;
+        margin-top: 0.8rem;
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+    }
+
+    .input-group {
+        position: relative;
+        margin-bottom: 1rem;
+    }
+
+    .input-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .custom-file-upload {
+        border: 2px dashed rgba(78, 205, 196, 0.5);
+        border-radius: 10px;
+        padding: 1.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .custom-file-upload:hover {
+        border-color: #4ECDC4;
+        background: rgba(78, 205, 196, 0.1);
+    }
+
+    .upload-icon {
+        font-size: 1.5rem;
+        color: #4ECDC4;
+        margin-bottom: 0.5rem;
+    }
+
+    .price-input {
+        position: relative;
+    }
+
+    .price-input::before {
+        content: '$';
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .price-input input {
+        padding-left: 25px;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .container {
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #4ECDC4;
+        border-radius: 4px;
+    }
+
+    ::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Make navbar and footer transparent */
+    nav, footer {
+        background-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    /* Ensure text and links are visible */
+    nav a, footer a, nav .navbar-brand, footer {
+        color: #fff !important;
+    }
+
+    /* Add any additional styles to ensure readability */
+    nav a:hover, footer a:hover {
+        color: #4ECDC4 !important;
+    }
+</style>
+
+<div class="container">
+    <div class="listing-form-container">
+        <h1 class="form-title">Create New Listing</h1>
+        <form action="/listings" method="POST" enctype="multipart/form-data">
+            <div class="form-section">
+                <h3 class="section-title">Basic Information</h3>
+                <div class="input-group">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="listing[title]" required
+                        placeholder="Enter a captivating title">
+                </div>
+                <div class="input-group">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" id="description" name="listing[description]" required
+                        placeholder="Describe your amazing space" rows="4"></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-title">Location Details</h3>
+                <div class="input-group">
+                    <label class="form-label" for="location">Location</label>
+                    <input class="form-control" type="text" id="location" name="listing[location]" required
+                        placeholder="Where is your place located?">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-title">Pricing</h3>
+                <div class="input-group">
+                    <label class="form-label" for="price">Price Per Night</label>
+                    <input class="form-control" type="number" id="price" name="listing[price]" required
+                        placeholder="0">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-title">Property Details</h3>
+                <div class="input-group">
+                    <label class="form-label" for="country">Country</label>
+                    <input class="form-control" type="text" id="country" name="listing[country]" required
+                        placeholder="Enter country">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3 class="section-title">Images</h3>
+                <div class="input-group">
+                    <label class="form-label" for="image">Upload Image</label>
+                    <input class="form-control" type="file" id="image" name="image" multiple>
+                </div>
+                <div class="input-group">
+                    <label class="form-label" for="imageUrl">Or Enter Image URL</label>
+                    <input class="form-control" type="url" id="imageUrl" name="listing[imageUrl]"
+                        placeholder="Enter image URL">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="coordinates">Location Coordinates (optional)</label>
+                <input type="text" class="form-control" id="coordinates" name="listing[geometry][coordinates]" 
+                       placeholder="Enter coordinates (longitude, latitude)">
+            </div>
+
+            <button class="btn-submit">
+                <i class="fas fa-plus-circle me-2"></i>Create Listing
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Add Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">

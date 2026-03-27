@@ -1,0 +1,50 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container mt-5 pt-4 pb-5">
+    <h1 class="mb-4 fw-bold">Wishlists</h1>
+    
+    <% if (wishlistListings.length === 0) { %>
+        <div class="text-center py-5">
+            <i class="bi bi-heart text-secondary" style="font-size: 4rem;"></i>
+            <p class="h4 text-secondary mt-3">Create your first wishlist</p>
+            <p class="text-muted">As you search, click the heart icon to save your favorite places to stay</p>
+            <a href="/listings" class="btn btn-dark mt-3 px-4 py-2 rounded-3">Start searching</a>
+        </div>
+    <% } else { %>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            <% for(let listing of wishlistListings) { %>
+                <div class="col">
+                    <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark group">
+                        <div class="card border-0 h-100 listing-card">
+                            <div class="card-img-wrapper rounded-4 overflow-hidden mb-2" style="aspect-ratio: 1/1;">
+                                <img src="<%= listing.image.url %>" 
+                                     alt="<%= listing.title %>" 
+                                     class="card-img-top w-100 h-100 object-fit-cover transition duration-300">
+                            </div>
+                            <div class="card-body p-0">
+                                <h5 class="fw-bold text-truncate mb-1"><%= listing.title %></h5>
+                                <p class="text-muted small mb-1"><%= listing.location %></p>
+                                <p class="mb-0">
+                                    <span class="fw-bold">₹<%= listing.price %></span>
+                                    <span class="text-muted small"> night</span>
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            <% } %>
+        </div>
+    <% } %>
+</div>
+
+<style>
+    .listing-card img {
+        transition: transform 0.3s ease;
+    }
+    .listing-card:hover img {
+        transform: scale(1.05);
+    }
+    .rounded-4 {
+        border-radius: 1rem !important;
+    }
+</style>

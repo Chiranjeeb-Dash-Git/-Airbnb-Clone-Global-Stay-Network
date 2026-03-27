@@ -1,0 +1,60 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top border-bottom py-3">
+    <div class="container-fluid px-4 px-lg-5">
+        <!-- LEFT: Brand -->
+        <a class="navbar-brand d-flex align-items-center" href="/listings" style="flex: 1;">
+            <i class="fa-brands fa-airbnb me-2" style="color: #FF385C; font-size: 2rem;"></i>
+            <span class="d-none d-lg-block" style="color: #FF385C; font-weight: 700; font-size: 1.2rem;">airbnb</span>
+        </a>
+        
+        <!-- MIDDLE: Search Bar -->
+        <div class="mx-auto order-0 order-lg-1" style="flex: 0 1 auto; width: 100%; max-width: 400px;">
+            <div class="airbnb-nav-search-bar" style="border: 1px solid #dddddd; border-radius: 40px; box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05); transition: box-shadow 0.2s ease; background: white; height: 48px; display: flex; align-items: center; padding: 0 8px 0 24px; cursor: text;">
+                <input type="text" id="searchInput" placeholder="Anywhere  |  Any week  |  Add guests" style="border: none; outline: none; background: transparent; width: 100%; font-size: 14px; font-weight: 500; color: #222;" />
+                <div class="search-icon-btn d-flex align-items-center justify-content-center ms-auto" style="background: #ff385c; color: white; border-radius: 50%; width: 32px; height: 32px; min-width: 32px; cursor: pointer; transition: background 0.2s ease;">
+                    <i class="fas fa-search" style="font-size: 0.8rem;"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: Menus -->
+        <button class="navbar-toggler ms-2 order-1 order-lg-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse justify-content-end order-lg-3" id="navbarNavAltMarkup" style="flex: 1;">
+            <div class="navbar-nav align-items-center mt-3 mt-lg-0">
+                <a class="nav-link fw-bold text-dark d-none d-xl-block me-3" href="/listings/new">Airbnb your home</a>
+                <% if (currentUser) { %>
+                    <a class="nav-link fw-bold text-dark me-2" href="/trips">Trips</a>
+                    <a class="nav-link fw-bold text-dark me-3" href="/favorites">Favorites</a>
+                    <a class="nav-link signup-btn" href="/logout" style="background: linear-gradient(45deg, #FF6B6B, #FF8E53); padding: 8px 20px; border-radius: 25px; color: white; transition: transform 0.3s ease, box-shadow 0.3s ease;">Logout</a>
+                <% } else { %>
+                    <a class="nav-link signup-btn me-2" href="/login" style="background: linear-gradient(45deg, #FF6B6B, #FF8E53); padding: 8px 20px; border-radius: 25px; color: white; transition: transform 0.3s ease, box-shadow 0.3s ease;">Login</a>
+                    <a class="nav-link signup-btn" href="/signup" style="background: linear-gradient(45deg, #FF6B6B, #FF8E53); padding: 8px 20px; border-radius: 25px; color: white; transition: transform 0.3s ease, box-shadow 0.3s ease;">Sign Up</a>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<style>
+    .airbnb-nav-search-bar:hover {
+        box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.12) !important;
+    }
+    .signup-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        color: white !important;
+    }
+    input#searchInput::placeholder {
+        color: #222 !important;
+        font-weight: 500;
+        opacity: 1;
+    }
+    @media (max-width: 991px) {
+        .airbnb-nav-search-bar {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    }
+</style>

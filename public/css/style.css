@@ -1,0 +1,263 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+} 
+footer {
+    background-color: #f8f9fa;
+    color: #404040;
+    padding: 0.8rem 0;
+    margin-top: auto;  /* Pushes footer to bottom if using flex on body */
+    border-top: 1px solid #e9ecef;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.footer-links a {
+    color: #404040;
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #1a1a1a;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-icons a {
+    color: #404040;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #1a1a1a;
+}
+
+p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #bdc3c7;
+}
+
+/* Responsive design */
+@media (min-width: 768px) {
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+.listing-card {
+    border: none !important;
+    margin-bottom: 2rem;
+}
+
+.card-img-top {
+    border-radius: 1rem !important;
+    aspect-ratio: 1/1 !important;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 1rem 0 !important;
+}
+
+.listing-link {
+    text-decoration: none;
+    color: #404040 !important;
+}
+
+.listing-link:hover {
+    color: #404040 !important;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: #404040;
+}
+
+.listing-price {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #404040;
+}
+
+.listing-location {
+    color: #717171;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+    font-weight: 400;
+}
+
+.card:hover .card-img-top {
+    opacity: 0.9;
+    transition: all 0.3s ease;
+}
+
+.text-muted {
+    color: #484848 !important;
+    font-weight: 500;
+}
+
+.btn-primary {
+    display: none;  /* Removing the view details button to match Airbnb style */
+}
+
+/* Show page specific styles */
+.show-img {
+    height: 400px;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+
+.card-text {
+    color: #404040;  /* Matching the card title color */
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-body .listing-location {
+    color: #717171;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-body .listing-price {
+    color: #404040;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.btn {
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+}
+
+.btn-info {
+    background-color: #00b4d8;
+    border: none;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #0096c7;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #ef233c;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #d90429;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #f8f9fa !important;  /* Light off-white color */
+    border-bottom: 1px solid #e9ecef;
+    padding: 1rem 2rem;
+}
+
+.navbar-brand {
+    color: #404040 !important;
+    font-weight: 600;
+}
+
+.nav-link {
+    color: #404040 !important;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: #1a1a1a !important;
+}
+
+/* Hide listings button in navbar */
+.nav-link[href="/listings"] {
+    display: none !important;
+}
+
+/* Designer Credit Styling */
+.designer-credit {
+    font-size: 0.95rem;
+    color: #404040;
+    text-align: center;
+    padding: 0.2rem 0;
+}
+
+.credit-text {
+    margin: 0;
+    font-weight: 500;
+    color: #717171;
+}
+
+.designer-name {
+    font-weight: 700;
+    color: #ff385c;
+    letter-spacing: 0.5px;
+    font-family: inherit;
+    transition: color 0.3s ease;
+}
+
+.designer-name:hover {
+    color: #d90429;
+}
+
+.fa-heart.text-danger {
+    color: #ff385c !important;
+    animation: heartbeat 1.5s infinite;
+    display: inline-block;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.25); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.25); }
+    70% { transform: scale(1); }
+}
+
+.copyright-text {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #bdc3c7;
+}
+
+@media (min-width: 768px) {
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .designer-credit {
+        order: 0; /* Can adjust placement */
+        flex-grow: 1;
+    }
+}

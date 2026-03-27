@@ -1,0 +1,629 @@
+<% layout('layouts/boilerplate') %>
+
+<!-- Compact Filter Bar -->
+<div class="container-fluid filter-container px-3">
+    <div class="filter-scroll">
+        <div class="d-flex flex-nowrap align-items-center gap-3 py-2">
+            <!-- Individual Filter Items -->
+            <div class="filter-item">
+                <a href="/listings?type=rooms" class="filter-btn">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-door-open fs-5"></i>
+                    </div>
+                    <span class="filter-label">Rooms</span>
+                </a>
+            </div>
+            
+            <div class="filter-item">
+                <a href="/listings?location=beach" class="filter-btn">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-umbrella fs-5"></i>
+                    </div>
+                    <span class="filter-label">Beach</span>
+                </a>
+            </div>
+
+            <div class="filter-item">
+                <a href="/listings?location=countryside" class="filter-btn">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-tree fs-5"></i>
+                    </div>
+                    <span class="filter-label">Countryside</span>
+                </a>
+            </div>
+
+            <div class="filter-item">
+                <a href="/listings?location=city" class="filter-btn">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-building fs-5"></i>
+                    </div>
+                    <span class="filter-label">City</span>
+                </a>
+            </div>
+
+            <div class="filter-item">
+                <a href="/listings?feature=lake" class="filter-btn">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-water fs-5"></i>
+                    </div>
+                    <span class="filter-label">Lake</span>
+                </a>
+            </div>
+
+            <div class="filter-item">
+                <a href="/listings?location=arctic" class="filter-btn">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-snow2 fs-5"></i>
+                    </div>
+                    <span class="filter-label">Arctic</span>
+                </a>
+            </div>
+
+            <!-- Additional Filter Items -->
+            <div class="filter-item">
+                <a href="/listings?type=cabin" class="filter-btn">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-house fs-5"></i>
+                    </div>
+                    <span class="filter-label">Cabins</span>
+                </a>
+            </div>
+
+            <div class="filter-item">
+                <a href="/listings?feature=view" class="filter-btn">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-binoculars fs-5"></i>
+                    </div>
+                    <span class="filter-label">Amazing views</span>
+                </a>
+            </div>
+
+            <div class="filter-item">
+                <a href="/listings?feature=lakefront" class="filter-btn">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-water fs-5"></i>
+                    </div>
+                    <span class="filter-label">Lakefront</span>
+                </a>
+            </div>
+
+            <div class="filter-item">
+                <button type="button" class="filter-btn">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-emoji-dizzy fs-5"></i>
+                    </div>
+                    <span class="filter-label">OMG!</span>
+                </button>
+            </div>
+
+            <div class="filter-item">
+                <button type="button" class="filter-btn">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-umbrella fs-5"></i>
+                    </div>
+                    <span class="filter-label">Beachfront</span>
+                </button>
+            </div>
+
+            <div class="filter-item">
+                <button type="button" class="filter-btn">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-building fs-5"></i>
+                    </div>
+                    <span class="filter-label">Castles</span>
+                </button>
+            </div>
+
+            <div class="filter-item">
+                <button type="button" class="filter-btn">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-tree fs-5"></i>
+                    </div>
+                    <span class="filter-label">Treehouses</span>
+                </button>
+            </div>
+
+            <div class="filter-item">
+                <button type="button" class="filter-btn">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-house-door fs-5"></i>
+                    </div>
+                    <span class="filter-label">Tiny homes</span>
+                </button>
+            </div>
+
+            <div class="filter-item">
+                <button type="button" class="filter-btn">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-gem fs-5"></i>
+                    </div>
+                    <span class="filter-label">Luxe</span>
+                </button>
+            </div>
+
+            <div class="filter-item">
+                <button type="button" class="filter-btn">
+                    <div class="icon-wrapper">
+                        <i class="bi bi-trophy fs-5"></i>
+                    </div>
+                    <span class="filter-label">Golfing</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AirBnb Style Layout -->
+<div class="container-fluid px-4 px-lg-5 mt-4">
+    <div class="listings-container px-0" style="margin-top: 0 !important; box-shadow: none;">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-4">
+            <% for(let listing of listings) { %>
+                <div class="col filter-col">
+                    <a href="/listings/<%= listing._id %>" class="card-link" style="text-decoration: none; color: inherit;">
+                        <div class="card h-100 border-0 listing-card" data-title="<%= listing.title ? listing.title.toLowerCase() : '' %>" data-location="<%= listing.location ? listing.location.toLowerCase() : '' %>" data-country="<%= listing.country ? listing.country.toLowerCase() : '' %>">
+                            <div class="card-img-wrapper position-relative">
+                                <img src="<%= listing.image.url %>" 
+                                     class="card-img-top w-100" 
+                                     alt="<%= listing.title %>"
+                                     style="aspect-ratio: 20/19; object-fit: cover; border-radius: 1rem;">
+                                <i class="bi <%= (currentUser && currentUser.favorites && currentUser.favorites.includes(listing._id.toString())) ? 'bi-heart-fill' : 'bi-heart' %> favorite-icon position-absolute end-0 top-0 m-3 hover-scale" 
+                                   style="cursor: pointer; z-index: 2; font-size: 1.35rem; <%= (currentUser && currentUser.favorites && currentUser.favorites.includes(listing._id.toString())) ? 'color: #ff385c;' : 'color: rgba(0,0,0,0.4); text-shadow: 0 0 2px rgba(255,255,255,0.8); -webkit-text-stroke: 1.5px white;' %>"
+                                   data-listing-id="<%= listing._id %>">
+                                </i>
+                            </div>
+                            <div class="card-body px-0 pt-2 pb-0">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <h6 class="card-title text-truncate mb-0 fw-bold" style="font-size: 0.95rem; line-height: 1.3;">
+                                        <%= listing.location %>, <%= listing.country %>
+                                    </h6>
+                                    <span class="d-flex align-items-center flex-shrink-0 gap-1 text-dark ms-2" style="font-size: 0.95rem;">
+                                        <i class="bi bi-star-fill text-dark" style="font-size: 0.75rem;"></i>
+                                        <%= listing.avgRating ? listing.avgRating.toFixed(2).replace(/\.00$/, '') : 'New' %>
+                                    </span>
+                                </div>
+                                <p class="card-text text-muted mb-0 text-truncate" style="font-size: 0.95rem; line-height: 1.4;">
+                                    <%= listing.title %>
+                                </p>
+                                <p class="card-text text-muted mb-0 text-truncate" style="font-size: 0.95rem; line-height: 1.4;">
+                                    Oct 15 - 20
+                                </p>
+                                <p class="card-text mt-1 text-dark" style="font-size: 0.95rem; line-height: 1.5;">
+                                    <span class="fw-bold">₹<%= listing.price.toLocaleString('en-IN') %></span> night
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<!-- Add this to your navbar -->
+<div id="navSearchContainer" class="d-none"></div>
+
+<script>
+let currentCategory = '';
+let currentSearch = '';
+
+function filterListings() {
+    const cols = document.querySelectorAll('.filter-col');
+    
+    cols.forEach(col => {
+        const card = col.querySelector('.listing-card');
+        const title = card.dataset.title || '';
+        const location = card.dataset.location || '';
+        const country = card.dataset.country || '';
+        const txt = title + ' ' + location + ' ' + country;
+        
+        let matchesSearch = currentSearch === '' || txt.includes(currentSearch);
+        
+        let matchesCategory = true;
+        if (currentCategory) {
+            const cat = currentCategory;
+            if (cat === 'rooms') matchesCategory = txt.includes('room') || txt.includes('loft') || txt.includes('apartment');
+            else if (cat === 'beach' || cat === 'beachfront') matchesCategory = txt.includes('beach') || txt.includes('cancun') || txt.includes('bali') || txt.includes('malibu') || txt.includes('coast') || txt.includes('ocean');
+            else if (cat === 'countryside') matchesCategory = txt.includes('country') || txt.includes('farm') || txt.includes('cottage') || txt.includes('rustic') || txt.includes('cotswolds');
+            else if (cat === 'city') matchesCategory = txt.includes('city') || txt.includes('downtown') || txt.includes('new york') || txt.includes('los angeles') || txt.includes('tokyo') || txt.includes('amsterdam') || txt.includes('boston') || txt.includes('florence') || txt.includes('miami');
+            else if (cat === 'lake' || cat === 'lakefront') matchesCategory = txt.includes('lake');
+            else if (cat === 'arctic') matchesCategory = txt.includes('arctic') || txt.includes('snow') || txt.includes('ski') || txt.includes('alps') || txt.includes('aspen') || txt.includes('banff');
+            else if (cat === 'cabins') matchesCategory = txt.includes('cabin');
+            else if (cat === 'amazing views') matchesCategory = txt.includes('view') || txt.includes('panorama') || txt.includes('mountain') || txt.includes('rockies');
+            else if (cat === 'omg!') matchesCategory = txt.includes('treehouse') || txt.includes('island') || txt.includes('castle') || txt.includes('unique') || txt.includes('fiji');
+            else if (cat === 'castles') matchesCategory = txt.includes('castle') || txt.includes('palace') || txt.includes('historic') || txt.includes('scotland');
+            else if (cat === 'treehouses') matchesCategory = txt.includes('treehouse');
+            else if (cat === 'tiny homes') matchesCategory = txt.includes('tiny') || txt.includes('micro') || txt.includes('compact');
+            else if (cat === 'luxe') matchesCategory = txt.includes('lux') || txt.includes('penthouse') || txt.includes('villa') || txt.includes('mansion') || txt.includes('dubai');
+            else if (cat === 'golfing') matchesCategory = txt.includes('golf');
+            else matchesCategory = txt.includes(cat);
+        }
+        
+        if (matchesSearch && matchesCategory) {
+            col.style.display = 'block';
+            card.style.opacity = '1';
+        } else {
+            col.style.display = 'none';
+            card.style.opacity = '0';
+        }
+    });
+}
+
+document.getElementById('searchInput').addEventListener('input', function(e) {
+    currentSearch = e.target.value.toLowerCase();
+    filterListings();
+});
+
+document.querySelectorAll('.favorite-icon').forEach(icon => {
+    icon.addEventListener('click', async function() {
+        if (!<%= currentUser ? 'true' : 'false' %>) {
+            window.location.href = '/login';
+            return;
+        }
+        
+        const listingId = this.dataset.listingId;
+        const isLiked = this.classList.contains('liked');
+        
+        try {
+            const response = await fetch(`/listings/${listingId}/favorite`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ action: isLiked ? 'unlike' : 'like' })
+            });
+
+            if (response.ok) {
+                this.classList.toggle('liked');
+                this.style.color = this.classList.contains('liked') ? '#ff385c' : '#484848';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+});
+
+// Update click handler for filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        if (this.classList.contains('active')) {
+            // Click on already active -> deselect
+            this.classList.remove('active');
+            currentCategory = '';
+        } else {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentCategory = this.querySelector('.filter-label').innerText.trim().toLowerCase();
+        }
+        filterListings();
+    });
+});
+
+// Add this JavaScript
+let isSearchSticky = false;
+const originalSearch = document.querySelector('.search-container');
+const navSearchContainer = document.getElementById('navSearchContainer');
+const navbar = document.querySelector('nav'); // Update selector to match your nav
+
+window.addEventListener('scroll', () => {
+    const shouldStick = window.scrollY > 100;
+    
+    if (shouldStick && !isSearchSticky) {
+        // Clone search bar
+        const clonedSearch = originalSearch.cloneNode(true);
+        clonedSearch.id = 'stickySearch';
+        clonedSearch.style.width = originalSearch.offsetWidth + 'px';
+        clonedSearch.style.position = 'fixed';
+        clonedSearch.style.top = navbar.offsetHeight / 2 + 'px';
+        clonedSearch.style.left = '50%';
+        clonedSearch.style.transform = 'translateX(-50%)';
+        clonedSearch.style.zIndex = 1000;
+        
+        navSearchContainer.appendChild(clonedSearch);
+        originalSearch.style.opacity = '0';
+        isSearchSticky = true;
+    } 
+    else if (!shouldStick && isSearchSticky) {
+        document.getElementById('stickySearch')?.remove();
+        originalSearch.style.opacity = '1';
+        isSearchSticky = false;
+    }
+});
+
+// Handle window resize
+window.addEventListener('resize', () => {
+    if (isSearchSticky) {
+        const stickySearch = document.getElementById('stickySearch');
+        if (stickySearch) {
+            stickySearch.style.width = originalSearch.offsetWidth + 'px';
+        }
+    }
+});
+</script>
+
+<style>
+    body {
+        background-color: white !important;  /* Changed from #f7f7f7 */
+    }
+
+    .container {
+        max-width: 95vw !important;  /* Using viewport width instead of fixed pixels */
+        padding: 0 20px;
+        margin: 0 auto;
+    }
+
+    .listings-container {
+        background-color: transparent;
+        padding: 0 !important;
+        box-shadow: none;
+        width: 100%;
+    }
+
+    .card {
+        background-color: transparent !important;
+        transition: none;
+        border: none;
+        box-shadow: none !important;
+    }
+
+    .card:hover {
+        transform: none;
+        box-shadow: none !important;
+    }
+
+    .card-body {
+        padding: 12px 0 0 0 !important;
+    }
+
+    .listing-card {
+        border-radius: 0;
+        overflow: visible;
+        background: transparent;
+    }
+
+    .card-img-wrapper {
+        overflow: hidden;
+        border-radius: 1rem;
+        background-color: #e5e5e5;
+    }
+
+    .card-img-top {
+        transition: transform 0.3s ease;
+    }
+
+    .listing-card:hover .card-img-top {
+        transform: scale(1.05);
+    }
+
+    .text-truncate {
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+    }
+
+    .hover-scale {
+        transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    .hover-scale:hover {
+        transform: scale(1.15);
+    }
+    
+    .hover-scale:active {
+        transform: scale(0.9);
+    }
+
+    @media (max-width: 576px) {
+        .row-cols-1 > * {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+
+    .card-link {
+        display: block;
+    }
+
+    /* Search Container */
+    .search-container {
+        position: relative;
+        margin: 1rem 0 !important;
+        z-index: 10;
+        transition: opacity 0.3s ease;
+    }
+
+    .airbnb-search-bar:hover {
+        box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.12) !important;
+    }
+
+    .search-section {
+        transition: background 0.2s ease;
+    }
+
+    .search-section:hover {
+        background: #ebebeb;
+    }
+
+    .search-icon-btn:hover {
+        background: #d90b3e !important;
+    }
+
+    input#searchInput::placeholder {
+        color: #717171 !important;
+        font-weight: 400;
+    }
+
+    /* Filter Bar Styles */
+    .filter-container {
+        background: white;
+        padding: 0 1rem !important;
+        overflow-x: hidden;
+        border-bottom: 1px solid #ebebeb;
+    }
+
+    .filter-scroll {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
+    }
+
+    .filter-item {
+        flex: 0 0 auto;
+        width: 80px;
+        text-align: center;
+    }
+
+    .filter-btn {
+        border: 0;
+        background: transparent;
+        padding: 0;
+        width: 100%;
+        cursor: pointer;
+    }
+
+    .icon-wrapper {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #f7f7f7 !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 8px;
+        transition: all 0.2s ease;
+    }
+
+    .filter-btn.active .icon-wrapper {
+        background: #000000 !important;
+    }
+
+    .filter-btn.active .filter-label {
+        color: #000000 !important;
+    }
+
+    .filter-label {
+        font-size: 12px;
+        color: #717171;
+        font-weight: 500;
+        display: block;
+        white-space: nowrap;
+        transition: color 0.2s ease;
+    }
+
+    .filter-btn:hover .icon-wrapper {
+        background: #e6e6e6 !important;
+    }
+
+    .filter-btn:hover .filter-label {
+        color: #000000 !important;
+    }
+
+    /* Updated Filter Bar Styles */
+    .filter-scroll::-webkit-scrollbar {
+        height: 3px;
+        background: transparent;
+    }
+
+    .filter-scroll::-webkit-scrollbar-thumb {
+        background: #cccccc;
+    }
+
+    .filter-item {
+        width: auto;
+        min-width: 80px;
+    }
+
+    .filter-label {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+    }
+
+    .icon-wrapper i {
+        transition: transform 0.2s ease;
+    }
+
+    .filter-btn.active .icon-wrapper i {
+        color: white !important;
+    }
+
+    .filter-btn:hover .icon-wrapper i {
+        transform: scale(1.1);
+    }
+
+    /* Updated Color Scheme (Cleaned up) */
+
+    /* Filter Bar Colors */
+    .filter-btn.active .icon-wrapper {
+        background: #000000 !important;
+    }
+
+    .filter-btn.active .filter-label {
+        color: #000000 !important;
+    }
+
+    .filter-btn:hover .filter-label {
+        color: #000000 !important;
+    }
+
+    .icon-wrapper {
+        background: #f7f7f7 !important;
+    }
+
+    .filter-btn:hover .icon-wrapper {
+        background: #e6e6e6 !important;
+    }
+
+    /* Scrollbar Color */
+    .filter-scroll::-webkit-scrollbar-thumb {
+        background: #cccccc;
+    }
+
+    /* Favorite Icon Color */
+    .bi-heart-fill {
+        color: #ff385c !important;
+    }
+
+    /* Final Color Fixes */
+    .filter-btn .icon-wrapper i {
+        color: #000000 !important; /* Force black icons */
+    }
+
+    .filter-btn.active .icon-wrapper {
+        background: #000000 !important;
+    }
+
+    .filter-btn.active .icon-wrapper i {
+        color: #ffffff !important; /* White icons on active */
+    }
+
+    .filter-btn:hover .icon-wrapper {
+        background: #e6e6e6 !important;
+    }
+
+    /* Cleaned up duplicate search styles */
+
+    .filter-scroll::-webkit-scrollbar-thumb {
+        background: #888888;
+    }
+
+    /* Add these styles */
+    .search-container {
+        transition: opacity 0.3s ease;
+    }
+
+    #stickySearch {
+        animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+        from { transform: translate(-50%, -20px); opacity: 0; }
+        to { transform: translate(-50%, 0); opacity: 1; }
+    }
+</style>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+

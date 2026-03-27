@@ -1,0 +1,419 @@
+<% layout('layouts/boilerplate') %>
+
+<!-- Tailwind CSS & Google Fonts -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "surface": "#fcf9f8",
+                    "primary-fixed-dim": "#ffb2b6",
+                    "on-surface-variant": "#5c3f41",
+                    "on-tertiary-fixed-variant": "#464747",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-container": "#006e72",
+                    "surface-container-highest": "#e5e2e1",
+                    "on-primary-fixed-variant": "#920029",
+                    "secondary-container": "#8eeff4",
+                    "secondary": "#00696d",
+                    "on-primary-container": "#fffbff",
+                    "on-error-container": "#93000a",
+                    "on-error": "#ffffff",
+                    "surface-dim": "#dcd9d9",
+                    "on-secondary": "#ffffff",
+                    "background": "#fcf9f8",
+                    "secondary-fixed": "#91f2f7",
+                    "surface-container-low": "#f6f3f2",
+                    "tertiary-fixed-dim": "#c7c6c6",
+                    "on-surface": "#1b1c1c",
+                    "surface-bright": "#fcf9f8",
+                    "on-primary-fixed": "#40000d",
+                    "outline": "#906f70",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "primary": "#ba0036",
+                    "surface-container": "#f0eded",
+                    "on-primary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-variant": "#e5e2e1",
+                    "primary-fixed": "#ffdada",
+                    "surface-container-high": "#eae7e7",
+                    "outline-variant": "#e5bdbe",
+                    "inverse-on-surface": "#f3f0ef",
+                    "tertiary": "#5c5c5c",
+                    "surface-tint": "#be0038",
+                    "tertiary-container": "#747474",
+                    "inverse-surface": "#303030",
+                    "on-tertiary-fixed": "#1b1c1c",
+                    "inverse-primary": "#ffb2b6",
+                    "tertiary-fixed": "#e3e2e2",
+                    "on-background": "#1b1c1c",
+                    "on-secondary-fixed-variant": "#004f52",
+                    "on-tertiary-container": "#fefcfc",
+                    "on-secondary-fixed": "#002021",
+                    "primary-container": "#e21e4a",
+                    "secondary-fixed-dim": "#74d6db"
+                },
+                fontFamily: {
+                    "headline": ["Plus Jakarta Sans", "sans-serif"],
+                    "body": ["Plus Jakarta Sans", "sans-serif"],
+                    "label": ["Plus Jakarta Sans", "sans-serif"]
+                },
+                borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+            },
+        },
+    }
+</script>
+
+<style>
+    /* Override boilerplate restrictions for full-width layout */
+    main.container {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin-top: 0 !important;
+    }
+    /* Hide legacy elements to match the requested design exactly */
+    .navbar { display: none !important; }
+    footer { display: none !important; }
+
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .primary-gradient {
+        background: linear-gradient(135deg, #ba0036 0%, #e21e4a 100%);
+    }
+    /* Leaflet customization */
+    #map {
+        height: 320px;
+        width: 100%;
+        border-radius: 0.75rem;
+        z-index: 10;
+        box-shadow: none;
+    }
+    .marker-pin {
+        width: 30px;
+        height: 30px;
+        background: #ba0036;
+        border: 2px solid white;
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+    .marker-pin::after {
+        content: '';
+        width: 12px;
+        height: 12px;
+        margin: 7px 0 0 7px;
+        background: white;
+        position: absolute;
+        border-radius: 50%;
+    }
+</style>
+
+<div class="bg-surface font-body text-on-surface antialiased min-h-screen">
+    <!-- Premium Navigation Bar -->
+    <header class="sticky top-0 w-full z-100 bg-white/90 backdrop-blur-2xl border-b border-zinc-200/50 shadow-sm transition-all duration-300">
+        <div class="max-w-[2520px] mx-auto xl:px-20 md:px-10 sm:px-2 px-4 flex items-center justify-between h-20">
+            <a href="/listings" class="text-[#ba0036] font-extrabold text-2xl tracking-tighter flex items-center gap-1">
+                <span class="material-symbols-outlined text-3xl">travel</span>
+                Airbnb
+            </a>
+            <div class="hidden md:flex items-center gap-8 text-sm font-semibold text-zinc-600">
+                <a class="hover:text-primary transition-colors" href="/listings">Stays</a>
+                <a class="hover:text-primary transition-colors" href="#">Experiences</a>
+                <a class="hover:text-primary transition-colors" href="#">Online Experiences</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="/listings/new" class="hidden lg:block text-sm font-bold text-zinc-900 px-4 py-2 rounded-full hover:bg-zinc-100 transition-all">Become a Host</a>
+                <div class="flex items-center gap-3 border border-zinc-200 rounded-full p-2 pl-4 hover:shadow-lg transition-all cursor-pointer bg-white group">
+                    <span class="material-symbols-outlined text-zinc-600 group-hover:text-zinc-900">menu</span>
+                    <span class="material-symbols-outlined text-4xl text-zinc-400 group-hover:text-primary transition-colors">account_circle</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-8 pb-32">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Property Header Titles -->
+            <div class="mb-6">
+                <h1 class="text-3xl font-extrabold tracking-tight mb-2 text-zinc-900"><%= listing.title %></h1>
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex items-center gap-4 text-sm font-semibold text-zinc-700">
+                        <div class="flex items-center gap-1">
+                            <span class="material-symbols-outlined text-sm text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="font-bold"><%= listing.reviews.length > 0 ? (listing.reviews.reduce((acc, r) => acc + r.rating, 0) / listing.reviews.length).toFixed(1) : 'New' %></span>
+                            <span class="underline ml-1 font-medium text-zinc-500"><%= listing.reviews.length %> reviews</span>
+                        </div>
+                        <div class="hidden sm:block text-zinc-300">•</div>
+                        <div class="flex items-center gap-1">
+                            <span class="material-symbols-outlined text-sm text-primary">workspace_premium</span>
+                            <span>Superhost</span>
+                        </div>
+                        <div class="hidden sm:block text-zinc-300">•</div>
+                        <div class="underline font-semibold cursor-pointer hover:text-primary transition-colors"><%= listing.location %>, <%= listing.country %></div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button class="flex items-center gap-2 underline text-sm font-semibold hover:bg-zinc-100 px-3 py-2 rounded-lg transition-all text-zinc-700">
+                            <span class="material-symbols-outlined text-lg">ios_share</span> Share
+                        </button>
+                        <button class="flex items-center gap-2 underline text-sm font-semibold hover:bg-zinc-100 px-3 py-2 rounded-lg transition-all text-zinc-700">
+                            <span class="material-symbols-outlined text-lg">favorite</span> Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bento Grid Gallery -->
+            <div class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-1.5 h-[300px] md:h-[400px] rounded-xl overflow-hidden mb-8">
+                <div class="md:col-span-2 md:row-span-2 relative group cursor-pointer overflow-hidden">
+                    <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="<%= listing.image.url %>" alt="<%= listing.title %>"/>
+                </div>
+                <div class="hidden md:block relative group cursor-pointer overflow-hidden">
+                    <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://picsum.photos/seed/<%= listing._id %>1/600/400" alt="Interior"/>
+                </div>
+                <div class="hidden md:block relative group cursor-pointer overflow-hidden">
+                    <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://picsum.photos/seed/<%= listing._id %>2/600/400" alt="Pool"/>
+                </div>
+                <div class="hidden md:block relative group cursor-pointer overflow-hidden">
+                    <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://picsum.photos/seed/<%= listing._id %>3/600/400" alt="Living Room"/>
+                </div>
+                <div class="hidden md:block relative group cursor-pointer overflow-hidden">
+                    <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://picsum.photos/seed/<%= listing._id %>4/600/400" alt="Bedroom"/>
+                    <button class="absolute bottom-3 right-3 bg-white border border-zinc-300 px-3 py-1.5 rounded-lg font-semibold text-xs shadow-sm hover:bg-zinc-50 transition-all flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-base">grid_view</span> Show all photos
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-10">
+                <!-- Main Content (Left) -->
+                <div class="flex-1">
+                    <div class="flex items-center justify-between pb-6 mb-6 border-b border-zinc-200">
+                        <div>
+                            <h2 class="text-xl font-bold tracking-tight mb-0.5 text-zinc-900">Entire villa hosted by <%= listing.user ? listing.user.username : 'Owner' %></h2>
+                            <p class="text-zinc-500 text-sm"><%= listing.maxGuests %> guests · <%= listing.bedrooms %> bedrooms · <%= listing.bedrooms + 1 %> beds · <%= listing.bathrooms %> baths</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-full overflow-hidden bg-zinc-100 border border-zinc-200 flex-shrink-0">
+                            <img class="w-full h-full object-cover" src="https://api.dicebear.com/7.x/micah/svg?seed=<%= listing.user ? listing.user.username : 'Elena' %>" alt="Host"/>
+                        </div>
+                    </div>
+
+                    <!-- Highlight Features -->
+                    <div class="space-y-5 mb-8 pb-8 border-b border-zinc-200">
+                        <div class="flex gap-4">
+                            <span class="material-symbols-outlined text-xl pt-0.5 text-zinc-700">workspace_premium</span>
+                            <div>
+                                <h3 class="font-semibold text-sm text-zinc-900"><%= listing.user ? listing.user.username : 'Host' %> is a Superhost</h3>
+                                <p class="text-zinc-500 text-xs leading-relaxed">Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <span class="material-symbols-outlined text-xl pt-0.5 text-zinc-700">location_on</span>
+                            <div>
+                                <h3 class="font-semibold text-sm text-zinc-900">Great location</h3>
+                                <p class="text-zinc-500 text-xs leading-relaxed">95% of recent guests gave the location a 5-star rating.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <span class="material-symbols-outlined text-xl pt-0.5 text-zinc-700">calendar_today</span>
+                            <div>
+                                <h3 class="font-semibold text-sm text-zinc-900">Free cancellation for 48 hours</h3>
+                                <p class="text-zinc-500 text-xs leading-relaxed">Get a full refund if you change your mind.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Description Section -->
+                    <div class="pb-8 mb-8 border-b border-zinc-200">
+                        <p class="text-sm leading-relaxed text-zinc-600 mb-4 whitespace-pre-wrap"><%= listing.description %></p>
+                        <button class="font-semibold text-sm underline flex items-center gap-0.5 hover:text-primary transition-colors">
+                            Show more <span class="material-symbols-outlined text-base">chevron_right</span>
+                        </button>
+                    </div>
+
+                    <!-- Amenities -->
+                    <div class="pb-8 mb-8 border-b border-zinc-200">
+                        <h2 class="text-lg font-bold text-zinc-900 mb-4">What this place offers</h2>
+                        <div class="grid grid-cols-2 gap-3">
+                            <% (listing.amenities || []).forEach(amenity => { %>
+                                <div class="flex items-center gap-3 py-2">
+                                    <span class="material-symbols-outlined text-zinc-700 text-xl">check_circle</span>
+                                    <span class="text-zinc-700 text-sm"><%= amenity %></span>
+                                </div>
+                            <% }) %>
+                        </div>
+                        <button class="mt-4 border border-zinc-900 rounded-lg px-5 py-2.5 font-semibold text-sm hover:bg-zinc-50 transition-colors">Show all <%= (listing.amenities || []).length %> amenities</button>
+                    </div>
+
+                    <!-- Reviews & Form -->
+                    <div class="pb-8 mb-8 border-b border-zinc-200">
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="material-symbols-outlined text-lg text-zinc-900" style="font-variation-settings: 'FILL' 1;">star</span>
+                            <h2 class="text-lg font-bold text-zinc-900"><%= listing.reviews.length > 0 ? (listing.reviews.reduce((acc, r) => acc + r.rating, 0) / listing.reviews.length).toFixed(1) : 'New' %> · <%= listing.reviews.length %> reviews</h2>
+                        </div>
+
+                        <!-- Review List -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <% listing.reviews.forEach(review => { %>
+                                <div class="">
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <img class="w-10 h-10 rounded-full" src="https://api.dicebear.com/7.x/avataaars/svg?seed=<%= review.author ? review.author.username : 'Anonymous' %>" alt="User"/>
+                                        <div>
+                                            <div class="font-semibold text-sm text-zinc-900"><%= review.author ? review.author.username : 'Anonymous' %></div>
+                                            <div class="text-xs text-zinc-400"><%= new Date(review.createdAt).toLocaleDateString(undefined, { month: 'long', year: 'numeric' }) %></div>
+                                        </div>
+                                        <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST" class="ml-auto">
+                                            <button type="submit" class="p-1 rounded text-zinc-300 hover:text-red-500 transition-colors">
+                                                <span class="material-symbols-outlined text-lg">delete</span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <p class="text-zinc-600 text-sm leading-relaxed line-clamp-3"><%= review.comment %></p>
+                                </div>
+                            <% }) %>
+                        </div>
+                        <button class="border border-zinc-900 rounded-lg px-5 py-2.5 font-semibold text-sm hover:bg-zinc-50 transition-colors">Show all reviews</button>
+
+                        <!-- Review Form -->
+                        <div class="mt-8 bg-zinc-50 p-6 rounded-xl border border-zinc-200">
+                            <h3 class="text-base font-bold mb-4 text-zinc-900">Leave a review</h3>
+                            <form action="/listings/<%= listing._id %>/reviews" method="POST" class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">Rating</label>
+                                    <div class="flex flex-row-reverse justify-end gap-2 group">
+                                        <% for(let i=5; i>=1; i--) { %>
+                                            <input type="radio" id="rating-<%= i %>" name="review[rating]" value="<%= i %>" class="peer hidden" required>
+                                            <label for="rating-<%= i %>" class="cursor-pointer w-9 h-9 flex items-center justify-center rounded-lg bg-white border border-zinc-200 text-zinc-400 transition-all peer-checked:bg-primary peer-checked:border-primary peer-checked:text-white hover:border-zinc-400">
+                                                <span class="material-symbols-outlined text-lg">star</span>
+                                            </label>
+                                        <% } %>
+                                    </div>
+                                </div>
+                                <div>
+                                    <textarea name="review[comment]" rows="3" class="w-full rounded-lg border-zinc-200 focus:ring-2 focus:ring-primary/20 focus:border-primary p-3 text-sm text-zinc-700 bg-white" placeholder="Share your experience..." required></textarea>
+                                </div>
+                                <button type="submit" class="primary-gradient px-6 py-2.5 rounded-lg text-white font-semibold text-sm hover:opacity-95 active:scale-95 transition-all">Post Review</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Map -->
+                    <div>
+                        <h2 class="text-lg font-bold text-zinc-900 mb-4">Where you'll be</h2>
+                        <div id="map" class="border border-zinc-200 mb-4"></div>
+                        <h3 class="font-semibold text-sm text-zinc-900"><%= listing.location %>, <%= listing.country %></h3>
+                        <p class="text-xs text-zinc-500 mt-1 leading-relaxed">Located in a scenic neighborhood, you're moments away from local attractions. The area is known for its natural beauty and peaceful atmosphere.</p>
+                    </div>
+                </div>
+
+                <!-- Right: Booking Sidebar -->
+                <div class="lg:w-[340px] flex-shrink-0">
+                    <div class="sticky top-24 bg-white rounded-xl shadow-lg border border-zinc-200 p-5">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <span class="text-xl font-bold text-zinc-900">₹<%= listing.price %></span>
+                                <span class="text-zinc-500 text-sm"> night</span>
+                            </div>
+                            <div class="flex items-center gap-1 text-xs font-semibold text-zinc-600">
+                                <span class="material-symbols-outlined text-zinc-900 text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span><%= (listing.reviews && listing.reviews.length > 0) ? (listing.reviews.reduce((acc, r) => acc + r.rating, 0) / listing.reviews.length).toFixed(1) : 'New' %></span>
+                                <span class="text-zinc-400 underline">· <%= listing.reviews.length %> reviews</span>
+                            </div>
+                        </div>
+
+                        <form action="/listings/<%= listing._id %>/book" method="POST" class="space-y-3">
+                            <div class="rounded-lg border border-zinc-300 overflow-hidden">
+                                <div class="grid grid-cols-2 border-b border-zinc-300">
+                                    <div class="p-2.5 border-r border-zinc-300">
+                                        <label class="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-0.5">Check-in</label>
+                                        <input type="date" name="checkIn" class="w-full text-xs font-medium text-zinc-900 border-none p-0 focus:ring-0 bg-transparent" required>
+                                    </div>
+                                    <div class="p-2.5">
+                                        <label class="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-0.5">Checkout</label>
+                                        <input type="date" name="checkOut" class="w-full text-xs font-medium text-zinc-900 border-none p-0 focus:ring-0 bg-transparent" required>
+                                    </div>
+                                </div>
+                                <div class="p-2.5">
+                                    <label class="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-0.5">Guests</label>
+                                    <input type="number" name="guests" min="1" max="<%= listing.maxGuests %>" value="1" class="w-full text-xs font-medium text-zinc-900 border-none p-0 focus:ring-0 bg-transparent" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="primary-gradient w-full py-3 rounded-lg text-white font-bold text-sm hover:opacity-95 active:scale-95 transition-all">Reserve</button>
+                        </form>
+                        
+                        <p class="text-center text-xs text-zinc-400 mt-3 mb-4">You won't be charged yet</p>
+                        
+                        <div class="space-y-2.5 text-zinc-600 text-xs">
+                            <div class="flex justify-between underline decoration-dotted underline-offset-4">
+                                <span>₹<%= listing.price %> x 5 nights</span>
+                                <span class="text-zinc-900">₹<%= listing.price * 5 %></span>
+                            </div>
+                            <div class="flex justify-between underline decoration-dotted underline-offset-4">
+                                <span>Cleaning fee</span>
+                                <span class="text-zinc-900">₹1,500</span>
+                            </div>
+                            <div class="flex justify-between underline decoration-dotted underline-offset-4">
+                                <span>Airbnb service fee</span>
+                                <span class="text-zinc-900">₹2,200</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-zinc-200 flex justify-between items-center font-bold text-sm">
+                            <span class="text-zinc-900">Total before taxes</span>
+                            <span class="text-zinc-900">₹<%= (listing.price * 5) + 3700 %></span>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center justify-center gap-1.5 text-zinc-400 text-xs font-semibold underline cursor-pointer hover:text-zinc-900 transition-colors">
+                        <span class="material-symbols-outlined text-sm">flag</span>
+                        Report this listing
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Map Implementation -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Try to get dynamic coordinates
+        const coordinates = <% if (listing.geometry && listing.geometry.coordinates && listing.geometry.coordinates.length === 2) { %>
+            [<%= listing.geometry.coordinates[1] %>, <%= listing.geometry.coordinates[0] %>]
+        <% } else { %>
+            [20.5937, 78.9629] // India default
+        <% } %>;
+
+        const map = L.map('map', {
+            scrollWheelZoom: false,
+            zoomControl: false
+        }).setView(coordinates, 12);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '©CARTO'
+        }).addTo(map);
+
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+        const markerIcon = L.divIcon({
+            className: 'location-marker',
+            html: `<div class="marker-pin"></div>`,
+            iconSize: [30, 30],
+            iconAnchor: [15, 30]
+        });
+
+        L.marker(coordinates, { icon: markerIcon }).addTo(map)
+            .bindPopup('<div class="font-black text-primary font-inter"><%= listing.title %></div>', {
+                closeButton: false,
+                offset: [0, -20]
+            }).openPopup();
+    });
+</script>
