@@ -165,4 +165,10 @@ app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
 
-process.removeAllListeners('warning');
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.log('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+process.on('uncaughtException', (err, origin) => {
+    console.log('Uncaught Exception:', err, 'at:', origin);
+});
