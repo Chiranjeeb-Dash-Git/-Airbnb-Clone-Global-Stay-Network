@@ -14,6 +14,7 @@ const path = require('path');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
@@ -53,8 +54,25 @@ app.use(express.json());
 // Method Override
 app.use(methodOverride('_method'));
 
+// Database URL
+const dbUrl = process.env.MONGO_ATLAS_URL || 'mongodb://127.0.0.1:27017/airbnb';
+
+// Mongo Session Store
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    crypto: {
+        secret: process.env.SESSION_SECRET || 'thisshouldbeabettersecret',
+    },
+    touchAfter: 24 * 3600 // seconds
+});
+
+store.on('error', function(e) {
+    console.log('SESSION STORE ERROR', e);
+});
+
 // Session Configuration
 app.use(session({
+    store,
     secret: process.env.SESSION_SECRET || 'thisshouldbeabettersecret',
     resave: false,
     saveUninitialized: true,
@@ -125,7 +143,7 @@ app.use((err, req, res, next) => {
 // ====================
 // 7. Database Connection
 // ====================
-mongoose.connect('mongodb://127.0.0.1:27017/airbnb')
+mongoose.connect(dbUrl)
     .then(() => {
         console.log('Connected to MongoDB');
     })
