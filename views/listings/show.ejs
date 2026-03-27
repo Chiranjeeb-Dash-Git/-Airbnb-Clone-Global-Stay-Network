@@ -386,11 +386,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Try to get dynamic coordinates
-        const coordinates = <% if (listing.geometry && listing.geometry.coordinates && listing.geometry.coordinates.length === 2) { %>
-            [<%= listing.geometry.coordinates[1] %>, <%= listing.geometry.coordinates[0] %>]
-        <% } else { %>
-            [20.5937, 78.9629] // India default
-        <% } %>;
+        const coordinates = <%= JSON.stringify(listing.geometry && listing.geometry.coordinates && listing.geometry.coordinates.length === 2 ? [listing.geometry.coordinates[1], listing.geometry.coordinates[0]] : [20.5937, 78.9629]) %>;
 
         const map = L.map('map', {
             scrollWheelZoom: false,

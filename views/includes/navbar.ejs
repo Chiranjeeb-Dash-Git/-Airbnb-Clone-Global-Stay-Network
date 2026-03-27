@@ -24,7 +24,7 @@
         <div class="collapse navbar-collapse justify-content-end order-lg-3" id="navbarNavAltMarkup" style="flex: 1;">
             <div class="navbar-nav align-items-center mt-3 mt-lg-0">
                 <a class="nav-link fw-bold text-dark d-none d-xl-block me-3" href="/listings/new">Airbnb your home</a>
-                <% if (currentUser) { %>
+                <% if (typeof currentUser !== 'undefined' && currentUser) { %>
                     <a class="nav-link fw-bold text-dark me-2" href="/trips">Trips</a>
                     <a class="nav-link fw-bold text-dark me-3" href="/favorites">Favorites</a>
                     <a class="nav-link signup-btn" href="/logout" style="background: linear-gradient(45deg, #FF6B6B, #FF8E53); padding: 8px 20px; border-radius: 25px; color: white; transition: transform 0.3s ease, box-shadow 0.3s ease;">Logout</a>

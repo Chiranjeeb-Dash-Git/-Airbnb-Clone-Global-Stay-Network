@@ -166,8 +166,8 @@
                                      class="card-img-top w-100" 
                                      alt="<%= listing.title %>"
                                      style="aspect-ratio: 20/19; object-fit: cover; border-radius: 1rem;">
-                                <i class="bi <%= (currentUser && currentUser.favorites && currentUser.favorites.includes(listing._id.toString())) ? 'bi-heart-fill' : 'bi-heart' %> favorite-icon position-absolute end-0 top-0 m-3 hover-scale" 
-                                   style="cursor: pointer; z-index: 2; font-size: 1.35rem; <%= (currentUser && currentUser.favorites && currentUser.favorites.includes(listing._id.toString())) ? 'color: #ff385c;' : 'color: rgba(0,0,0,0.4); text-shadow: 0 0 2px rgba(255,255,255,0.8); -webkit-text-stroke: 1.5px white;' %>"
+                                <i class="bi <%= (typeof currentUser !== 'undefined' && currentUser && currentUser.favorites && currentUser.favorites.includes(listing._id.toString())) ? 'bi-heart-fill' : 'bi-heart' %> favorite-icon position-absolute end-0 top-0 m-3 hover-scale" 
+                                   style="cursor: pointer; z-index: 2; font-size: 1.35rem; <%= (typeof currentUser !== 'undefined' && currentUser && currentUser.favorites && currentUser.favorites.includes(listing._id.toString())) ? 'color: #ff385c;' : 'color: rgba(0,0,0,0.4); text-shadow: 0 0 2px rgba(255,255,255,0.8); -webkit-text-stroke: 1.5px white;' %>"
                                    data-listing-id="<%= listing._id %>">
                                 </i>
                             </div>
@@ -255,7 +255,7 @@ document.getElementById('searchInput').addEventListener('input', function(e) {
 
 document.querySelectorAll('.favorite-icon').forEach(icon => {
     icon.addEventListener('click', async function() {
-        if (!<%= currentUser ? 'true' : 'false' %>) {
+        if (!<%= (typeof currentUser !== 'undefined' && currentUser) ? 'true' : 'false' %>) {
             window.location.href = '/login';
             return;
         }
