@@ -1,13 +1,20 @@
+require('dotenv').config({ path: '../.env' }); // Load .env from parent directory
 const mongoose = require("mongoose");
 const { data } = require("./data");
 const Listing = require("../models/listing.js");
 const User = require("../models/user.js");
 const Booking = require("../models/booking.js");
 
+const dbUrl = process.env.MONGO_ATLAS_URL || "mongodb://127.0.0.1:27017/airbnb";
+console.log("Seeding to:", dbUrl.includes("mongodb+srv") ? "MongoDB Atlas" : "Local Database");
+
 async function initDB() {
     try {
-        await mongoose.connect("mongodb://127.0.0.1:27017/airbnb");
-        console.log("MONGODB CONNECTED!");
+        await mongoose.connect(dbUrl, {
+            family: 4,
+            serverSelectionTimeoutMS: 10000,
+        });
+        console.log("✅ MONGODB CONNECTED FOR SEEDING!");
         
         // Delete existing data
         await User.deleteMany({});

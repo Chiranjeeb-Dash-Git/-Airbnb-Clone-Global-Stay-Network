@@ -30,6 +30,9 @@ const listingRoutes = require('./routes/listing');
 const reviewRoutes = require('./routes/reviews');
 const userRoutes = require('./routes/user');
 
+// Initial Seeding Import
+const { data: seedData } = require('./init/data');
+
 // ====================
 // 3. App Configuration
 // ====================
@@ -161,8 +164,34 @@ mongoose.connect(dbUrl, {
     serverSelectionTimeoutMS: 10000,
     family: 4, // Forces IPv4 for more stable Atlas connections
 })
-    .then(() => {
+    .then(async () => {
         console.log('✅ Connected to MongoDB Atlas successfully');
+        
+        // Auto-Seed Check
+        try {
+            const count = await mongoose.model('Listing').countDocuments({});
+            if (count === 0) {
+                console.log('⚠️ Database is empty! Starting auto-seeding sequence...');
+                
+                // Create a default owner if none exists
+                let owner = await mongoose.model('User').findOne({ username: 'owner' });
+                if (!owner) {
+                    owner = new User({ username: 'owner', email: 'owner@gmail.com' });
+                    owner = await mongoose.model('User').register(owner, 'password');
+                    console.log('Created default owner account.');
+                }
+                
+                const preparedData = seedData.map((obj) => ({
+                    ...obj,
+                    user: owner._id,
+                }));
+                
+                await mongoose.model('Listing').insertMany(preparedData);
+                console.log(`✅ Auto-seeding complete! ${preparedData.length} listings inserted.`);
+            }
+        } catch (seedErr) {
+            console.error('❌ SEEDING ERROR:', seedErr.message);
+        }
     })
     .catch(err => {
         console.error('❌ MONGODB CONNECTION ERROR:', err.message);
