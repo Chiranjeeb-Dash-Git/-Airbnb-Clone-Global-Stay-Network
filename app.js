@@ -65,6 +65,11 @@ console.log('Using database URL:', dbUrl.replace(/:([^:@]+)@/, ':****@').substri
 // Mongo Session Store
 const store = MongoStore.create({
     mongoUrl: dbUrl,
+    mongoOptions: {
+        family: 4, // Forces IPv4 for more stable Atlas connections
+        connectTimeoutMS: 10000,
+        serverSelectionTimeoutMS: 10000,
+    },
     crypto: {
         secret: process.env.SESSION_SECRET || 'thisshouldbeabettersecret',
     },
@@ -153,7 +158,8 @@ app.use((err, req, res, next) => {
 // 7. Database Connection
 // ====================
 mongoose.connect(dbUrl, {
-    serverSelectionTimeoutMS: 5000,
+    serverSelectionTimeoutMS: 10000,
+    family: 4, // Forces IPv4 for more stable Atlas connections
 })
     .then(() => {
         console.log('✅ Connected to MongoDB Atlas successfully');
